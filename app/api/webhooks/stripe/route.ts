@@ -1,3 +1,4 @@
+import Stripe from "stripe";
 import { headers } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 import { stripe, TIERS } from "@/lib/stripe";
@@ -104,8 +105,7 @@ export async function POST(req: NextRequest) {
         break;
       }
 
-      case "customer.subscription.deleted":
-      case "customer.subscription.cancelled": {
+      case "customer.subscription.deleted": {
         const subscription = event.data.object as Stripe.Subscription;
         const clerkUserId = subscription.metadata.clerkUserId;
 
